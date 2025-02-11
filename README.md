@@ -3,6 +3,8 @@
 ## Project Overview
 I successfully implemented a Continuous Deployment (CD) pipeline that automatically deploys applications to an Amazon EKS cluster using Jenkins.
 
+![Diagram](https://github.com/Princeton45/jenkins-eks-cd-pipeline/blob/main/images/diagram.png)
+
 ## Technologies Used
 - Jenkins
 - Amazon EKS (Elastic Kubernetes Service)

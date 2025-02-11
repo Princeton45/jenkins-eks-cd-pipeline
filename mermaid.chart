@@ -1,0 +1,31 @@
+graph TD
+    Start[Start Pipeline] --> Setup
+
+    subgraph "Jenkins Server Setup"
+        Setup[Jenkins Server Configuration] --> Kubectl[Install kubectl]
+        Setup --> Auth[Install aws-iam-authenticator]
+        Setup --> Config[Create kubeconfig file]
+        Setup --> Creds[Add AWS Credentials]
+    end
+
+    subgraph "Pipeline Process"
+        Config --> Jenkins[Jenkins Pipeline]
+        Creds --> Jenkins
+        Jenkins --> Build[Build Application]
+        Build --> Docker[Create Docker Image]
+        Docker --> Push[Push to Registry]
+        Push --> Deploy[Deploy to EKS]
+    end
+
+    subgraph "AWS EKS"
+        Deploy --> EKS[EKS Cluster]
+        EKS --> K8s[Kubernetes Deployment]
+        K8s --> Done[Deployment Complete]
+    end
+
+    classDef setup fill:#e1f7d5
+    classDef process fill:#ffebbb
+    classDef aws fill:#f9d1d1
+    class Setup,Kubectl,Auth,Config,Creds setup
+    class Jenkins,Build,Docker,Push process
+    class Deploy,EKS,K8s,Done aws
