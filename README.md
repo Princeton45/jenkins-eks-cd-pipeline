@@ -37,15 +37,11 @@ mv ./aws-iam-authenticator /usr/local/bin
 ![config](https://github.com/Princeton45/jenkins-eks-cd-pipeline/blob/main/images/config.png)
 
 
-![Jenkins Dashboard](images/jenkins-dashboard.png)
 
 ### Amazon EKS Configuration
-My EKS cluster runs with:
-- 2 worker nodes
-- Proper IAM roles and policies
-- Configured security groups
 
-![EKS Cluster](images/eks-cluster.png)
+![eks](https://github.com/Princeton45/jenkins-eks-cd-pipeline/blob/main/images/eks.png)
+
 
 ## Pipeline Implementation
 I extended my existing Jenkins pipeline to include:
@@ -53,27 +49,59 @@ I extended my existing Jenkins pipeline to include:
 - EKS cluster connection
 - Automated deployment to Kubernetes
 
-![Pipeline Stages](images/pipeline-stages.png)
+```groovy
+pipeline {   
+    agent any
+    tools {
+        maven 'maven-3.9.9'
+    }
+    stages {
+        stage("init") {
+            steps {
+                script {
+                    echo "initializing..."
+                }
+            }
+        }
+        stage("build jar") {
+            steps {
+                script {
+                    echo "building the application..."
+
+                }
+            }
+        }
+
+        stage("build image") {
+            steps {
+                script {
+                    echo "building the docker image..."
+                }
+            }
+        }
+
+        stage("deploy") {
+            environment {
+                AWS_ACCESS_KEY_ID = credentials('jenkins_aws_access_key_id')
+                AWS_SECRET_ACCESS_KEY = credentials('jenkins_aws_secret_access_key')
+            }
+            steps {
+                script {
+                   echo "deploying the docker image..."
+                   sh "kubectl create deployment nginx-deployment --image=nginx"
+                }
+            }
+        }               
+    }
+}
+```
 
 ## Results
-The pipeline successfully:
+The Jenkins pipeline successfully:
 1. Authenticates with AWS
 2. Connects to EKS cluster
 3. Deploys applications automatically
-4. Maintains zero-downtime deployments
 
-![Kubernetes Dashboard](images/k8s-dashboard.png)
+![done](https://github.com/Princeton45/jenkins-eks-cd-pipeline/blob/main/images/done.png)
 
-## Prerequisites
-- AWS Account with EKS permissions
-- Jenkins server
-- Docker Hub account
-- Basic understanding of Kubernetes
 
-## Contact
-[Your contact information]
-
-![Project Demo](images/project-demo.png)
-
----
-*Note: This project was completed as part of the Kubernetes on AWS - EKS module.*
