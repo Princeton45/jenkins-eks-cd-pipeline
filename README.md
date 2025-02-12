@@ -17,10 +17,24 @@ I successfully implemented a Continuous Deployment (CD) pipeline that automatica
 
 ### Jenkins Server
 I set up a Linux-based Jenkins server with the following components:
-- kubectl installation
-- aws-iam-authenticator
-- AWS credentials configuration  
-- Kubeconfig file for EKS cluster connectivity
+- Installed kubectl inside the Jenkins container
+
+```bash
+curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl; chmod +x ./kubectl; mv ./kubectl /usr/local/bin/kubectl
+```
+- Installed aws-iam-authenticator inside the Jenkins container
+
+```bash
+curl -Lo aws-iam-authenticator https://github.com/kubernetes-sigs/aws-iam-authenticator/releases/download/v0.6.11/aws-iam-authenticator_0.6.11_linux_amd64
+chmod +x ./aws-iam-authenticator
+mv ./aws-iam-authenticator /usr/local/bin
+```
+
+- Kubeconfig file for EKS cluster connectivity. This config file contains all the necessary information for authentication to the AWS Account & EKS Cluster.
+
+![kube](https://github.com/Princeton45/jenkins-eks-cd-pipeline/blob/main/images/kube.png)
+- Added AWS credentials configuration in Jenkins
+
 
 ![Jenkins Dashboard](images/jenkins-dashboard.png)
 
