@@ -3,8 +3,6 @@
 ## Project Overview
 I successfully implemented a Continuous Deployment (CD) pipeline that automatically deploys applications to an Amazon EKS cluster using Jenkins.
 
-![Diagram](https://github.com/Princeton45/jenkins-eks-cd-pipeline/blob/main/images/diagram.png)
-
 ## Technologies Used
 - Jenkins
 - Amazon EKS (Elastic Kubernetes Service)
@@ -33,7 +31,10 @@ mv ./aws-iam-authenticator /usr/local/bin
 - Kubeconfig file for EKS cluster connectivity. This config file contains all the necessary information for authentication to the AWS Account & EKS Cluster.
 
 ![kube](https://github.com/Princeton45/jenkins-eks-cd-pipeline/blob/main/images/kube.png)
+
 - Added AWS credentials configuration in Jenkins
+
+![config](https://github.com/Princeton45/jenkins-eks-cd-pipeline/blob/main/images/config.png)
 
 
 ![Jenkins Dashboard](images/jenkins-dashboard.png)
